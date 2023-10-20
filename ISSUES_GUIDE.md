@@ -42,6 +42,8 @@ Avoiding file saving for user reccordings and 11labs answers should improve resp
 
 Attention to the openAI transcription which currently requires a file path as parameter, perhaps a cache file path works ? As long as it is faster to process, to improve user experience with better response time.
 
+### Isue C1 - refactoring electron client with typescript instead of using javascript
+
 ## Advanced Issues
 
 These are challenging issues suitable for contributors who are familiar with the project or have a deep understanding of the relevant technologies.
