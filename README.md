@@ -38,21 +38,7 @@ The image above provides a high-level overview of the application's workflow:
 
 6. **Playback**: The Electron client then sequentially plays back the generated voice messages to the user.
 
-### 2. Conceptual Overview
-
-Here, we delve deeper into the underlying concepts of Amadeus. _(Expand upon the main concepts, ensuring the text is dense with information and concepts are clearly explained. Illustrations might be less prioritized in this section, but if needed, they can be added.)_
-
-### 3. Support and Configuration
-
-For any queries, issues, or assistance with Amadeus:
-
-- _(Provide a link or method to access support.)_
-
-Regarding configuration options:
-
-- _(Detail any configuration options or parameters that users might need to set or be aware of.)_
-
-### 5. Contributors (GitHub)
+## Contributors (GitHub)
 
 - [@MaloLM](https://github.com/MaloLM/)
 - [@Kévin Chea](https://github.com/Kevin-Chea/)
