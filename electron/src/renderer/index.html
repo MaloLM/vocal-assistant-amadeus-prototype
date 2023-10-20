@@ -1,0 +1,28 @@
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+  rel="stylesheet"
+/>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amadeus prototype</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="container">
+      <canvas id="oscilloscopeCanvas"></canvas>
+      <div id="instruction">Hold space ␣ to talk. Release to stop.</div>
+      <div id="record-indicator">REC •</div>
+      <div id="error-message" style="color: red; display: none">
+        Disconnected from server
+      </div>
+    </div>
+  </body>
+</html>
+
+<script src="renderer.js"></script>
