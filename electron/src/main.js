@@ -19,8 +19,8 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 600, // Initial witdh
     height: 600, // Initial height
-    resizable: false, // Avoid re-sizing
-    maximizable: false, // Avoid maximization
+    resizable: true, // Avoid re-sizing
+    maximizable: true, // Avoid maximization
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -59,6 +59,7 @@ ipcMain.on('audio-blob', async (event, audioBlob) => {
     return 'The user you are chatting with you is facing a problem talking with you. Tell him that you were not able to reach was he said and that you are sorry aboyt that.'
   })
 
+  logToFile(`USER SAID: ${userText}`)
   const serverResponse = await sendTextToServer(userText)
   console.log('Server response status:', serverResponse.status)
 })

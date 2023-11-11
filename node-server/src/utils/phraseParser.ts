@@ -1,7 +1,7 @@
 import { ToWords } from 'to-words'
 
 // Define the language variable at the top of the module for easy editing
-const LANGUAGE = 'en-GB'
+const LANGUAGE = 'fr-FR'
 
 // Initialize the ToWords instance with specific configuration for the above language
 const toWordsInstance = new ToWords({
