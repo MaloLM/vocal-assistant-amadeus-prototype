@@ -10,7 +10,8 @@ const envPath = path.join(__dirname, '../../.env')
 dotenv.config({ path: envPath })
 
 // A prompt used for initializing the chat session with current date & time.
-const SYSTEM_PROMPT = () => `${process.env.INIT_PROMPT}
+
+const SYSTEM_PROMPT = () => `You are ${process.env.ASSISTANT_NAME}.${process.env.INIT_PROMPT}
 Heure : ${new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}
 `
 
@@ -84,7 +85,6 @@ export default class Chat extends TypedEmitter<ChatEvents> {
 
       const reader = res.body.getReader()
       const decoder = new TextDecoder('utf-8')
-
 
       let buffer = ''
       let text = ''

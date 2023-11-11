@@ -14,6 +14,10 @@ dotenv.config({ path: envPath })
  * @param {string} [voiceId='onwK4e9ZLuTAKqWW03F9'] - The identifier for the voice model. Default is 'onwK4e9ZLuTAKqWW03F9'.
  * @returns {Promise<axios.Response>} - A promise that resolves with the audio response or rejects with an error.
  *
+ * Daniel - Male voice: onwK4e9ZLuTAKqWW03F9
+ * Ellie - Tender young woman: cT82hmhBFAZd0pmyTIaz
+ * Paola - young girl: IVozevJIbxq1pzR2zdD5
+ *
  * @example
  *
  * const audioResponse = await textToSpeech("Hello, World!");
@@ -21,7 +25,7 @@ dotenv.config({ path: envPath })
  *   // Handle the audio response
  * }
  */
-async function textToSpeech(text, voiceId = 'onwK4e9ZLuTAKqWW03F9') {
+async function textToSpeech(text, voiceId = 'IVozevJIbxq1pzR2zdD5') {
   const voiceURL = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`
 
   // API reference: https://docs.elevenlabs.io/api-reference/text-to-speech
