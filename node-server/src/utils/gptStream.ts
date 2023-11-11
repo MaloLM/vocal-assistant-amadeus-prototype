@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import path from 'path'
 import { sendMessage } from './webSocketServer'
 import { findSentence, replaceNumbersWithWords } from './phraseParser'
+import { logToFile } from './fileManager'
 
 const envPath = path.join(__dirname, '../../.env')
 dotenv.config({ path: envPath })
@@ -95,7 +96,20 @@ export default class Chat extends TypedEmitter<ChatEvents> {
         const parsedLines = lines
           .map((line) => line.replace(/^data: /, '').trim()) // Remove the "data: " prefix
           .filter((line) => line !== '' && line !== '[DONE]') // Remove empty lines and "[DONE]"
-          .map((line) => JSON.parse(line))
+          .map((line) => {
+            logToFile(line)
+            try {
+              return JSON.parse(line)
+            } catch (error) {
+              if (error instanceof Error && error.stack) {
+                console.log(error.stack)
+                logToFile(error.stack)
+              } else {
+                console.log('Catched error is of type unknown', error)
+              }
+              return null
+            }
+          })
 
         for (const parsedLine of parsedLines) {
           const { choices } = parsedLine
