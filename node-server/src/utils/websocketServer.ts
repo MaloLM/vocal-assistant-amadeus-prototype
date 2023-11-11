@@ -1,5 +1,6 @@
 import http from 'http'
 import { Server as WebSocketServer, WebSocket } from 'ws'
+import { logToFile } from './fileManager'
 
 // Define the WebSocket server instance
 export let wss: WebSocketServer
