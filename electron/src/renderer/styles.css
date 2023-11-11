@@ -13,6 +13,7 @@ body {
   place-items: center;
 }
 
+#timer,
 #instruction,
 #indicator {
   text-align: center;

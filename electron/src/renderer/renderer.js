@@ -7,6 +7,10 @@ let audioQueue = []
 let audioToPlay = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 let currentPlayingId = 0
 
+let startTime;
+let elapsedTime = 0;
+let timerInterval;
+
 // Canvas
 let audioContext = new AudioContext()
 const canvas = document.getElementById('oscilloscopeCanvas')
@@ -48,6 +52,16 @@ document.addEventListener('DOMContentLoaded', function () {
       recordIndicator.classList.add('recording')
       recordIndicator.textContent = 'REC •'
 
+      if (event.code === 'Space') {
+        // Si le chronomètre est déjà en cours, le réinitialiser
+        if (timerInterval) {
+          stopTimer();
+          elapsedTime = 0;
+          document.getElementById('timer').textContent = '00:00:00';
+        }
+        // Démarrer ou redémarrer le chronomètre
+        startTimer();
+      }
       mediaRecorder.start()
     }
   })
@@ -59,6 +73,10 @@ document.addEventListener('DOMContentLoaded', function () {
       recordIndicator.textContent = 'REC •'
 
       mediaRecorder.stop()
+
+      stopTimer();
+      // Réinitialiser le temps écoulé, mais ne pas mettre à jour l'affichage ici
+      elapsedTime = 0;
     }
   })
 })
@@ -269,3 +287,38 @@ function drawStaticCircle() {
 
 // Appeler la fonction pour dessiner le cercle par défaut
 drawStaticCircle()
+
+
+// TIMER 
+
+function startTimer() {
+  startTime = Date.now() - elapsedTime;
+  timerInterval = setInterval(function printTime() {
+    elapsedTime = Date.now() - startTime;
+    document.getElementById('timer').textContent = timeToString(elapsedTime);
+  }, 10);
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
+}
+
+function timeToString(time) {
+  let diffInHrs = time / 3600000;
+  let hh = Math.floor(diffInHrs);
+
+  let diffInMin = (diffInHrs - hh) * 60;
+  let mm = Math.floor(diffInMin);
+
+  let diffInSec = (diffInMin - mm) * 60;
+  let ss = Math.floor(diffInSec);
+
+  let diffInMs = (diffInSec - ss) * 100;
+  let ms = Math.floor(diffInMs);
+
+  let formattedMM = mm.toString().padStart(2, '0');
+  let formattedSS = ss.toString().padStart(2, '0');
+  let formattedMS = ms.toString().padStart(2, '0');
+
+  return `${formattedMM}:${formattedSS}:${formattedMS}`;
+}

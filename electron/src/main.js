@@ -50,7 +50,7 @@ eventModule.on('send-to-renderer', (message, data) => {
  */
 ipcMain.on('audio-blob', async (event, audioBlob) => {
   const fileName = generateRandomFileName()
-  const audioPath = path.join(__dirname, `/assets/reccords/${fileName}.wav`) // Path to save audio
+  const audioPath = path.join(__dirname, `/assets/reccords/${fileName}.mp3`) // Path to save audio
 
   saveAudioBlob(audioBlob, audioPath)
 
