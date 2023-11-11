@@ -84,6 +84,9 @@ export default class Chat extends TypedEmitter<ChatEvents> {
 
       const reader = res.body.getReader()
       const decoder = new TextDecoder('utf-8')
+
+
+      let buffer = ''
       let text = ''
       let prevMatchLength = 0
 
@@ -91,48 +94,45 @@ export default class Chat extends TypedEmitter<ChatEvents> {
         const { done, value } = await reader.read()
         if (done) break
 
-        const chunk = decoder.decode(value)
-        const lines = chunk.split('\n')
-        const parsedLines = lines
-          .map((line) => line.replace(/^data: /, '').trim()) // Remove the "data: " prefix
-          .filter((line) => line !== '' && line !== '[DONE]') // Remove empty lines and "[DONE]"
-          .map((line) => {
-            logToFile(line)
-            try {
-              logToFile(JSON.parse(line))
-              return JSON.parse(line)
-            } catch (error) {
-              if (error instanceof Error && error.stack) {
-                console.log(error.stack)
-                logToFile(error.stack)
-              } else {
-                console.log('Catched error is of type unknown', error)
+        buffer += decoder.decode(value, { stream: true })
+
+        let boundary = buffer.lastIndexOf('}\n') // Assumer que chaque message JSON se termine par '}\n'
+        if (boundary !== -1) {
+          let completeData = buffer.substring(0, boundary + 1)
+          buffer = buffer.substring(boundary + 1) // Conserver le reste dans le buffer
+
+          const messages = completeData.split('\n').map(line => line.replace(/^data: /, '').trim())
+                                      .filter(line => line !== '' && line !== '[DONE]')
+
+          for (const message of messages) {
+            if (message) {
+              try {
+                const parsedJson = JSON.parse(message)
+                // Traitement de chaque message JSON
+                if (parsedJson.choices) {
+                  const { delta } = parsedJson.choices[0]
+                  if (delta?.content) {
+                    text += delta.content
+                    this.emit('message', text, messageId)
+
+                    let match = findSentence(text) // Utilisation d'une regex pour détecter des phrases
+                    if (match && match.length > prevMatchLength) {
+                      let toSend = replaceNumbersWithWords(match[match.length - 1])
+                      logToFile(`ASSISTANT: ${toSend}`)
+                      sendMessage(toSend)
+                      prevMatchLength = match.length
+                    }
+                  }
+                }
+              } catch (error) {
+                if (error instanceof Error && error.stack) {
+                  logToFile(error.stack)
+                } else {
+                  console.log('Catched error is of type unknown', error)
+                }
               }
             }
-          })
-
-
-        let filtredLines = parsedLines.filter(element => element !== undefined);
-
-        for (const parsedLine of filtredLines) {
-          const { choices } = parsedLine
-          const { delta } = choices[0]
-          const { content } = delta
-
-          if (content) {
-            text += content
           }
-        }
-        this.emit('message', text, messageId)
-
-        let match = findSentence(text) // Use of a regex for detecting phrases
-
-        console.log('matches: ', match)
-        if (match && match.length > prevMatchLength) {
-          let toSend = replaceNumbersWithWords(match[match.length - 1])
-          console.log('--- Sending to Electron -> ', toSend)
-          sendMessage(toSend)
-          prevMatchLength = match.length
         }
       }
 

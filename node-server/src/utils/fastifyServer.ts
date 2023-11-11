@@ -41,7 +41,7 @@ fastifyApp.post('/api/request', {
     reply: FastifyReply
   ) => {
     const body = request.body
-    logToFile(`INCOMING SENTENCE: ${body.request}`)
+    logToFile(`USER: ${body.request}`)
     const response = await chat.send(body.request)
     reply.send({
       message: `${response}`,

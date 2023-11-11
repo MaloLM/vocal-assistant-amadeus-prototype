@@ -57,7 +57,7 @@ export function stopWSServer() {
 
   wss.clients.forEach((client) => client.terminate())
   wss.close(() => {
-    console.log('WebSocket server closed')
+    logToFile('WebSocket server closed')
   })
   isWSServerRunning = false
 }

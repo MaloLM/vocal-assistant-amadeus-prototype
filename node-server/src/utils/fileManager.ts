@@ -17,6 +17,7 @@ const logFilePath = path.resolve(__dirname, '../files/logs/app-logs.txt')
 export function logToFile(message: string) {
     /** Writes given message to the congigured log file */
     const formattedMessage = `[${new Date().toISOString()}] ${message}\n`
+    console.log(message)
     fs.appendFile(logFilePath, formattedMessage, (err) => {
       if (err) {
         console.error(`Failed to write to log file: ${err}`)

@@ -110,7 +110,7 @@ async function playNextAudio(fileName, id) {
     phrase: phraseDictionnary.getValue(id),
     audioBuffer: audioBufferToSend,
   }
-  console.log(
+  logToFile(
     `Send phrase to renderer ( ${dataToSend.id} ): ${dataToSend.phrase}`
   )
   eventModule.emit('send-to-renderer', 'play-audio', dataToSend)

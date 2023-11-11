@@ -55,13 +55,13 @@ ipcMain.on('audio-blob', async (event, audioBlob) => {
   saveAudioBlob(audioBlob, audioPath)
 
   const userText = await speechToText(audioPath).catch((error) => {
-    console.log(`Error during transcription : ${error}`)
+    logToFile(`Error during transcription : ${error}`)
     return 'The user you are chatting with you is facing a problem talking with you. Tell him that you were not able to reach was he said and that you are sorry aboyt that.'
   })
 
   logToFile(`USER SAID: ${userText}`)
   const serverResponse = await sendTextToServer(userText)
-  console.log('Server response status:', serverResponse.status)
+  logToFile('Server response status:', serverResponse.status)
 })
 
 // Initialize the WebSocket when the Electron app is ready.

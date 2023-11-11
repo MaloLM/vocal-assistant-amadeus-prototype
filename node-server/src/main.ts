@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import path from 'path'
 import { fastifyApp, main } from './utils/fastifyServer'
 import * as websocketServer from './utils/webSocketServer'
+import { logToFile } from './utils/fileManager'
 
 // Initialize the dotenv module to load environment variables
 dotenv.config()
@@ -20,7 +21,7 @@ export const httpServer = http.createServer()
 
 // Start listening on the specified WebSocket port
 httpServer.listen(WEB_SOCKET_PORT, () => {
-  console.log(`WebSocket is listening on ${WEB_SOCKET_PORT}`)
+  logToFile(`WebSocket is listening on ${WEB_SOCKET_PORT}`)
 })
 
 /**
@@ -35,13 +36,13 @@ async function startServer() {
  * Handles the graceful shutdown of the WebSocket, HTTP, and Fastify servers.
  */
 function onShutdown() {
-  console.log('Shutting down...')
+  logToFile('Shutting down...')
   websocketServer.stopWSServer()
   httpServer.close(() => {
-    console.log('HTTP server closed')
+    logToFile('HTTP server closed')
   })
   fastifyApp.close(() => {
-    console.log('Fastify server closed')
+    logToFile('Fastify server closed')
   })
 }
 

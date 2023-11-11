@@ -1,6 +1,7 @@
 const dotenv = require('dotenv')
 const axios = require('axios')
 const path = require('path')
+const { logToFile } = require('./fileManager')
 
 // Load environment variables from the .env file located two directories up.
 const envPath = path.join(__dirname, '../../.env')
@@ -48,7 +49,7 @@ async function textToSpeech(text, voiceId = 'onwK4e9ZLuTAKqWW03F9') {
 
   // Log any potential errors from the API response.
   if (response.status !== 200) {
-    console.log(response.detail)
+    logToFile(response.detail)
     return
   }
 
