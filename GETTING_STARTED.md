@@ -77,7 +77,7 @@ To start the Electron client, navigate to its directory and use the following co
 
 ```bash
 cd electron
-npm run start
+npm run dev
 ```
 
 ### Node.js Server

@@ -7,7 +7,7 @@ const envPath = path.join(__dirname, '../../.env')
 dotenv.config({ path: envPath })
 
 // Path to the log file for the WebSocket server
-const logFilePath = path.resolve(__dirname, '../files/logs/websocket-logs.txt')
+const logFilePath = path.resolve(__dirname, '../files/logs/app-logs.txt')
 
 /**
  * Logs messages to a predefined file.

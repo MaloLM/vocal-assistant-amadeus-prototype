@@ -7,7 +7,7 @@ const ffprobePath = require('ffprobe-static').path
 // Init
 ffmpeg.setFfmpegPath(ffmpegPath)
 ffmpeg.setFfprobePath(ffprobePath)
-const logFilePath = path.join(__dirname, '../assets/logs/websocket-logs.txt')
+const logFilePath = path.join(__dirname, '../assets/logs/app-logs.txt')
 
 // Functions
 

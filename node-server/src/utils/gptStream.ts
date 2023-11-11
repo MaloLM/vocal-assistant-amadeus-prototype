@@ -99,6 +99,7 @@ export default class Chat extends TypedEmitter<ChatEvents> {
           .map((line) => {
             logToFile(line)
             try {
+              logToFile(JSON.parse(line))
               return JSON.parse(line)
             } catch (error) {
               if (error instanceof Error && error.stack) {
@@ -107,11 +108,13 @@ export default class Chat extends TypedEmitter<ChatEvents> {
               } else {
                 console.log('Catched error is of type unknown', error)
               }
-              return null
             }
           })
 
-        for (const parsedLine of parsedLines) {
+
+        let filtredLines = parsedLines.filter(element => element !== undefined);
+
+        for (const parsedLine of filtredLines) {
           const { choices } = parsedLine
           const { delta } = choices[0]
           const { content } = delta

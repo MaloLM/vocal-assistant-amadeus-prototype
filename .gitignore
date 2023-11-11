@@ -1,6 +1,7 @@
 # Logs
 *.log
 npm-debug.log*
+app-logs.txt
 
 # Env 
 process.env

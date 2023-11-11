@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/main.js",
   "scripts": {
-    "start": "electron --trace-warnings .",
+    "dev": "electron --trace-warnings .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
