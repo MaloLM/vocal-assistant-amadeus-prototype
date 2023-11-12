@@ -1,4 +1,5 @@
 const axios = require('axios')
+// const dotenv = require('dotenv').config()
 
 /**
  * Sends the provided text to the server for processing.
@@ -8,7 +9,8 @@ const axios = require('axios')
  */
 async function sendTextToServer(userText) {
   // URL of the server's API endpoint
-  const serverUrl = 'http://localhost:3000/api/request'
+  const apiPort = process.env.API_PORT
+  const serverUrl = `http://localhost:${apiPort}/api/request`
 
   try {
     // Sending a POST request to the server with the user's text

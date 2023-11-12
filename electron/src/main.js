@@ -61,7 +61,7 @@ ipcMain.on('audio-blob', async (event, audioBlob) => {
 
   logToFile(`USER SAID: ${userText}`)
   const serverResponse = await sendTextToServer(userText)
-  logToFile('Server response status:', serverResponse.status)
+  logToFile(`Server response status: ${ serverResponse.status}`)
 })
 
 // Initialize the WebSocket when the Electron app is ready.

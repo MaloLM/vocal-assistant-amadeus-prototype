@@ -13,7 +13,7 @@ const { Dictionary } = require('./dictionary.js')
 
 let ws
 let retryCount = 0 // Counts the number of websocket reconnection attempts.
-const retryMax = 10
+const maxRetry = 10
 let increment = 0
 let idQueue = new Queue() // Queue to maintain order of incoming IDs.
 let audioDictionnary = new Dictionary() // Store ID to audio file name mapping.
@@ -23,7 +23,7 @@ let phraseDictionnary = new Dictionary() // Store ID to phrase text mapping.
  * Initializes the WebSocket connection.
  */
 function initializeWebSocket() {
-  const port = 8023
+  const port = process.env.WEB_SOCKET_PORT
   ws = new WebSocket(`ws://localhost:${port}`)
 
   ws.onopen = () => {
@@ -40,8 +40,10 @@ function initializeWebSocket() {
     logToFile('ID Queue: ' + idQueue)
 
     let fileName = await generateVoice(gptString)
-    phraseDictionnary.add(id, gptString)
-    audioDictionnary.add(id, fileName)
+    if (fileName != 'failure'){
+      phraseDictionnary.add(id, gptString)
+      audioDictionnary.add(id, fileName)
+    }
   }
 
   audioDictionnary.on(Dictionary.Event.AddElement, async () => {
@@ -74,14 +76,14 @@ function initializeWebSocket() {
 }
 
 /**
- * Handles WebSocket disconnection and retries connection if retryCount is less than retryMax.
+ * Handles WebSocket disconnection and retries connection if retryCount is less than maxRetry.
  */
 function handleDisconnection() {
   logToFile('Client disconnection')
   // Notify render process of deconection
   eventModule.emit('send-to-renderer', 'ws-status', 'disconnected')
 
-  if (retryCount < retryMax) {
+  if (retryCount < maxRetry) {
     // 10 reconnection attempts
     logToFile('Connection attempt N° ' + retryCount)
     retryCount++
@@ -123,14 +125,21 @@ async function playNextAudio(fileName, id) {
  * @returns {string} - The generated file name for the voice audio.
  */
 async function generateVoice(sentence) {
-  // Trigger TTS
-  const file = await textToSpeech(sentence)
-  // Generate a file name
-  const fileName = generateRandomFileName()
-  // Save audio file
-  await saveTtsAudio(file, fileName)
+  
+  try {
+     // Trigger TTS
+    const file = await textToSpeech(sentence)
+    // Generate a file name
+    const fileName = generateRandomFileName()
+    // Save audio file
+    await saveTtsAudio(file, fileName)
+    return fileName
 
-  return fileName
+  } catch (error) {
+    logToFile(error)
+    return 'failure'
+  }
+ 
 }
 
 exports.initializeWebSocket = initializeWebSocket
