@@ -1,6 +1,6 @@
 # Contributor's Guide
 
-Thank you for considering contributing to [PROJECT NAME]. This guide provides information about how to contribute and help make this project better.
+Thank you for considering contributing to this project. This guide provides information about how to contribute and help make this project better.
 
 ## Table of Contents
 1. [Setting Up the Development Environment](#setting-up-the-development-environment)
@@ -14,17 +14,18 @@ Thank you for considering contributing to [PROJECT NAME]. This guide provides in
 1. **Fork the Repository**: Start by forking [the main repository](LINK_TO_MAIN_REPO).
 2. **Clone Your Fork**:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/REPOSITORY_NAME.git
+   git clone https://github.com/MaloLM/vocal-assistant-amadeus-prototype.git
    ```
 3. **Navigate to the directory**:
    ```bash
-   cd REPOSITORY_NAME
+   cd vocal-assistant-amadeus-prototype
    ```
 4. **Add Upstream Remote**:
    ```bash
-   git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git
+   git remote add upstream https://github.com/MaloLM/vocal-assistant-amadeus-prototype.git
    ```
-5. **Install Dependencies**: (This step may vary based on the project. Here's a general example)
+5. **Install Dependencies**:
+   Inside both node-server and electron directory: 
    ```bash
    npm install
    ```
