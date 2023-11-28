@@ -33,7 +33,7 @@ Thank you for considering contributing to this project. This guide provides info
 ## Finding Issues to Work On
 
 - Check out the "Good First Issues" label in the issues tab of the main repository.
-- Once you find an issue you'd like to work on, comment on the issue expressing your interest.
+- Once you find an issue you'd like to work on, add this issue to the github repo tab to notify that you are working on it.
 
 ## Creating a Pull Request
 
